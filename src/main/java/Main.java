@@ -212,7 +212,7 @@ class Student {
 
 class Service {
     private static List<Student> students = new ArrayList<>();
-    class 
+    
     public void addStudent(Student student) {
         students.add(student);
     }
@@ -238,7 +238,7 @@ class Service {
         }
         return false;
     }
-    public void  sort StudentsByName(){
+    public void sortStudentsByName(){
         students.sort(Comparator.comparing(Student::getName, String.CASE_INSENSITIVE_ORDER));
     }
 }
