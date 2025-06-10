@@ -2,6 +2,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Comparator;
 
 class WrongStudentName extends Exception { }
 class WrongDateOfBirth extends Exception { }
@@ -65,6 +66,12 @@ class Main {
             System.out.println("Wiek musi być liczbą.");
         }
     }
+    public static void exercise6() throws IOException{
+        Service service = new Service();
+        service.sortStudentsByName();
+        System.out.println("Lista studentów posortowana alfabetycznie: ");
+        exercise2();
+    }
     
     
     public static Scanner scan = new Scanner(System.in);
@@ -79,6 +86,7 @@ class Main {
                     case 3: exercise3(); break;
                     case 4: exercise4(); break;
                     case 5: exercise5(); break;
+                    case 6: exercise6(); break;
                     default: return;
                 }
             } catch(IOException e) {
@@ -99,12 +107,13 @@ class Main {
             System.out.println("3 - aby wyszukać studenta po imieniu");
             System.out.println("4 - aby usunąć studenta po imieniu");
             System.out.println("5 - aby edytować dane studenta");
+            System.out.println("6 - aby posortować studentów alfabetycznie");
 
             String input = scan.nextLine();
-            if (input.matches("[0-5]")) {
+            if (input.matches("[0-6]")) {
                 return Integer.parseInt(input);
             } else {
-                System.out.println("Błąd! Wpisz tylko jedną cyfrę z zakresu 0–3.");
+                System.out.println("Błąd! Wpisz tylko jedną cyfrę z zakresu 0–6.");
             }
         }
     }
@@ -203,7 +212,7 @@ class Student {
 
 class Service {
     private static List<Student> students = new ArrayList<>();
-
+    class 
     public void addStudent(Student student) {
         students.add(student);
     }
@@ -228,5 +237,8 @@ class Service {
             }
         }
         return false;
+    }
+    public void  sort StudentsByName(){
+        students.sort(Comparator.comparing(Student::getName, String.CASE_INSENSITIVE_ORDER));
     }
 }
