@@ -17,6 +17,56 @@ class Main {
             System.out.println("Student " + nametodelete + " nie został znaleziony.");
         }
     }
+    public static void exercise5() throws IOException {
+        System.out.println("Podaj imię studenta do edycji: ");
+        String oldName = scan.nextLine();
+
+        Service service = new Service();
+        Student student = service.findStudentByName(oldName);
+
+        if (student == null) {
+            System.out.println("Nie znaleziono studenta o podanym imieniu.");
+            return;
+        }
+
+        try {
+            System.out.println("Podaj nowe imię (lub ENTER by zostawić): ");
+            String newName = scan.nextLine();
+            if (!newName.isEmpty()) {
+                if (newName.contains(" ")) throw new WrongStudentName();
+                student.setName(newName);
+            }
+
+            System.out.println("Podaj nowy wiek (lub ENTER by zostawić): ");
+            String ageInput = scan.nextLine();
+            if (!ageInput.isEmpty()) {
+                int newAge = Integer.parseInt(ageInput);
+                if (newAge < 1 || newAge > 99) {
+                    System.out.println("Wiek poza zakresem (1-99).");
+                    return;
+                }
+                student.setAge(newAge);
+            }
+
+            System.out.println("Podaj nową datę urodzenia DD-MM-YYYY (lub ENTER by zostawić): ");
+            String newDate = scan.nextLine();
+            if (!newDate.isEmpty()) {
+                if (!newDate.matches("^\\d{1,2}-\\d{1,2}-\\d{4}$")) throw new WrongDateOfBirth();
+                student.setDateOfBirth(newDate);
+            }
+
+            System.out.println("Student został zaktualizowany.");
+
+        } catch (WrongStudentName e) {
+            System.out.println("Nowe imię jest nieprawidłowe.");
+        } catch (WrongDateOfBirth e) {
+            System.out.println("Nowa data ma zły format.");
+        } catch (NumberFormatException e) {
+            System.out.println("Wiek musi być liczbą.");
+        }
+    }
+    
+    
     public static Scanner scan = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -28,6 +78,7 @@ class Main {
                     case 2: exercise2(); break;
                     case 3: exercise3(); break;
                     case 4: exercise4(); break;
+                    case 5  exercise5(); break;
                     default: return;
                 }
             } catch(IOException e) {
@@ -47,9 +98,10 @@ class Main {
             System.out.println("2 - aby wypisać wszystkich studentów");
             System.out.println("3 - aby wyszukać studenta po imieniu");
             System.out.println("4 - aby usunąć studenta po imieniu");
+            System.out.println("5 - aby edytować dane studenta");
 
             String input = scan.nextLine();
-            if (input.matches("[0-4]")) {
+            if (input.matches("[0-5]")) {
                 return Integer.parseInt(input);
             } else {
                 System.out.println("Błąd! Wpisz tylko jedną cyfrę z zakresu 0–3.");
@@ -123,6 +175,7 @@ class Student {
     private String name;
     private int age;
     private String dateOfBirth;
+    
 
     public Student(String name, int age, String dateOfBirth) {
         this.name = name;
@@ -136,6 +189,15 @@ class Student {
 
     public String ToString() {
         return "Student: " + name + ", wiek: " + age + ", data urodzenia: " + dateOfBirth;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setAge(int age){
+        this.age = age;
+    }
+    public void setDateOfBirth(String dateOfBirth) {
+        this.dateOfBirth = dateOfBirth;
     }
 }
 
