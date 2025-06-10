@@ -78,7 +78,7 @@ class Main {
                     case 2: exercise2(); break;
                     case 3: exercise3(); break;
                     case 4: exercise4(); break;
-                    case 5  exercise5(); break;
+                    case 5: exercise5(); break;
                     default: return;
                 }
             } catch(IOException e) {
